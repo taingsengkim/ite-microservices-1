@@ -2,7 +2,6 @@ package kh.edu.istad.platform.customer.persistence.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
 import kh.edu.istad.platform.customer.domain.valueobject.Email;
 import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
 import kh.edu.istad.platform.customer.persistence.entity.CustomerEntity;
@@ -12,7 +11,7 @@ import org.mapstruct.Named;
 
 import java.util.UUID;
 @Mapper(componentModel = "spring")
-public interface CustomerJpaMapper {
+public interface CustomerPersistenceMapper {
 
     @Mapping(target = "id", source = "id", qualifiedByName = "customerIdToUuid")
     @Mapping(target = "email", source = "email", qualifiedByName = "emailToString")

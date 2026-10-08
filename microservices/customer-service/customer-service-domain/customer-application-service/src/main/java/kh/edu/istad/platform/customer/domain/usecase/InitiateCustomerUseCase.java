@@ -3,13 +3,12 @@ package kh.edu.istad.platform.customer.domain.usecase;
 import kh.edu.istad.platform.customer.domain.dto.InitiateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.mapper.InitiateCustomerMapper;
+import kh.edu.istad.platform.customer.domain.exception.CustomerDomainException;
+import kh.edu.istad.platform.customer.domain.mapper.CustomerDomainMapper;
 import kh.edu.istad.platform.customer.domain.port.out.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 
 @Component
@@ -17,11 +16,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class InitiateCustomerUseCase {
 
-    private final InitiateCustomerMapper initiateCustomerMapper;
+    private final CustomerDomainMapper customerDomainMapper;
     private final CustomerRepository customerRepository;
-
     public InitiatedCustomerResult execute(InitiateCustomerCommand command){
-        Customer customer = initiateCustomerMapper.toCustomer(command);
+        validate(command);
+        Customer customer = customerDomainMapper.fromInitiateCustomerCommandToCustomer(command);
 
         log.info("Before initiate: {}", customer.getId());
 
@@ -30,6 +29,21 @@ public class InitiateCustomerUseCase {
         log.info("After initiate: {}", customer.getId());
 
         customerRepository.save(customer);
-        return initiateCustomerMapper.toResult(customer);
+        return customerDomainMapper.fromCustomerToInitiatedCustomerResult(customer);
+    }
+
+    private void validate(InitiateCustomerCommand command) {
+
+        if (command.username() == null || command.username().isBlank()) {
+            throw new CustomerDomainException( "Username must not be null or blank");
+        }
+
+        if (command.email() == null || command.email().isBlank()) {
+            throw new CustomerDomainException("Email must not be null or blank");
+        }
+
+        if (command.phoneNumber() == null || command.phoneNumber().isBlank()) {
+            throw new CustomerDomainException("Phone number must not be null or blank");
+        }
     }
 }

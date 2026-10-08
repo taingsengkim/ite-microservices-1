@@ -1,6 +1,5 @@
 package kh.edu.istad.platform.customer.domain.mapper;
 
-
 import kh.edu.istad.platform.customer.domain.dto.InitiateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
@@ -11,15 +10,35 @@ import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateCustomerMapper {
-    public Customer toCustomer(UpdateCustomerCommand command) {
+public class CustomerDomainMapper {
+    public Customer fromInitiateCustomerCommandToCustomer(InitiateCustomerCommand command) {
+        return Customer.Builder.builder()
+                .username(command.username())
+                .familyName(command.familyName())
+                .givenName(command.givenName())
+                .email(new Email(command.email()))
+                .phoneNumber(new PhoneNumber(command.phoneNumber()))
+                .build();
+    }
+
+    public InitiatedCustomerResult fromCustomerToInitiatedCustomerResult(Customer customer) {
+        return new InitiatedCustomerResult(
+                customer.getId().value(),
+                customer.getUsername(),
+                customer.getFamilyName(),
+                customer.getGivenName(),
+                customer.getEmail().value(),
+                customer.getPhoneNumber().value()
+        );
+    }
+    public Customer fromUpdatedCustomerCommandToCustomer(UpdateCustomerCommand command) {
         return Customer.Builder.builder()
                 .familyName(command.familyName())
                 .givenName(command.givenName())
                 .build();
     }
 
-    public UpdateCustomerResult toResult(Customer customer) {
+    public UpdateCustomerResult fromCustomerToUpdateCustomerResult(Customer customer) {
         return new UpdateCustomerResult(
                 customer.getId().value(),
                 customer.getUsername(),
