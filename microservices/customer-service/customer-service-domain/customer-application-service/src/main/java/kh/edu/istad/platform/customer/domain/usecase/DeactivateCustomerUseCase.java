@@ -1,5 +1,7 @@
 package kh.edu.istad.platform.customer.domain.usecase;
 
+
+import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.platform.customer.domain.dto.InitiateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
@@ -11,25 +13,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class InitiateCustomerUseCase {
+public class DeactivateCustomerUseCase {
 
-    private final InitiateCustomerMapper initiateCustomerMapper;
     private final CustomerRepository customerRepository;
 
-    public InitiatedCustomerResult execute(InitiateCustomerCommand command){
-        Customer customer = initiateCustomerMapper.toCustomer(command);
-
-        log.info("Before initiate: {}", customer.getId());
-
-        customer.initiateCustomer();
-
-        log.info("After initiate: {}", customer.getId());
-
+    public void execute(String id){
+        CustomerId customerId = new CustomerId(UUID.fromString(id));
+        Customer customer = customerRepository.findById(customerId);
+        customer.deactiveCustomer();
         customerRepository.save(customer);
-        return initiateCustomerMapper.toResult(customer);
+        log.info("Customer dactivated : {}",customerId);
     }
 }
