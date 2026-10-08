@@ -40,10 +40,11 @@ public class CustomerController {
 
     @PatchMapping("/{id}/deactivate")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deactivateCustomer(@PathVariable UUID id) {
-        deactivateCustomerUseCase.execute(customerWebMapper.toCustomerId(id));
+    public void deactivateCustomer(@PathVariable("id") UUID id) {
+        deactivateCustomerUseCase.execute(
+                customerWebMapper.toCustomerId(id)
+        );
     }
-
     @PatchMapping("/{id}")
     public CustomerUpdateResponse updateCustomer(
             @PathVariable("id") UUID id,
