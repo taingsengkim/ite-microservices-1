@@ -1,6 +1,7 @@
 package kh.edu.istad.common.restapi.exception;
 
 
+import kh.edu.istad.common.domain.exception.DomainException;
 import kh.edu.istad.common.restapi.dto.FieldErrorResponse;
 import kh.edu.istad.common.restapi.dto.RestApiErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,17 @@ public class GlobalExceptionHandler {
                         fieldError.getDefaultMessage()
                 ))
                 .toList();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DomainException.class)
+    public RestApiErrorResponse<?> handleDomainException(
+            DomainException e
+    ) {
+        return RestApiErrorResponse.builder()
+                .code("DOMAIN_ERROR")
+                .message(e.getMessage())
+                .build();
     }
 
 }

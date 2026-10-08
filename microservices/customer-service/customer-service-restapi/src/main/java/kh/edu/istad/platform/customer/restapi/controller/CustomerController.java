@@ -45,10 +45,12 @@ public class CustomerController {
                 customerWebMapper.toCustomerId(id)
         );
     }
+
     @PatchMapping("/{id}")
     public CustomerUpdateResponse updateCustomer(
             @PathVariable("id") UUID id,
             @RequestBody CustomerUpdateRequest customerUpdateRequest) {
+
         return customerWebMapper.toCustomerUpdateResponse(
                 updateCustomerUseCase.execute(
                         customerWebMapper.toCustomerId(id),
