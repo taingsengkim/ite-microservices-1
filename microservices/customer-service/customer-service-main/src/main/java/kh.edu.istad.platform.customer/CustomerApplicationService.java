@@ -3,10 +3,13 @@ package kh.edu.istad.platform.customer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "kh.edu.istad.platform",
+        "kh.edu.istad.common"
+})
 public class CustomerApplicationService {
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(CustomerApplicationService.class, args);
     }
 
