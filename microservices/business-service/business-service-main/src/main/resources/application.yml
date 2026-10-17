@@ -1,0 +1,15 @@
+server:
+  port: 8182
+
+spring:
+  application:
+    name: business-service
+  data:
+    mongodb:
+      uri: mongodb://mongod:mongod@localhost:2026/db_business?authSource=admin&uuidRepresentation=standard
+      auto-index-creation: true
+      uuid-representation: standard
+  # Fallback for newer Boot autoconfigure namespaces
+  mongodb:
+    uri: mongodb://mongod:mongod@localhost:2026/db_business?authSource=admin&uuidRepresentation=standard
+    uuid-representation: standard

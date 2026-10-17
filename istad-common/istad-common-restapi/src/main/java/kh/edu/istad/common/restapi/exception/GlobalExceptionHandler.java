@@ -1,6 +1,5 @@
 package kh.edu.istad.common.restapi.exception;
 
-
 import kh.edu.istad.common.domain.exception.DomainException;
 import kh.edu.istad.common.restapi.dto.FieldErrorResponse;
 import kh.edu.istad.common.restapi.dto.RestApiErrorResponse;
@@ -18,9 +17,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public RestApiErrorResponse<?> handleException(
-            MethodArgumentNotValidException e
-    ) {
+    public RestApiErrorResponse<?> handleException(MethodArgumentNotValidException e) {
         return RestApiErrorResponse.builder()
                 .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 .message("Data validation failed")
@@ -28,9 +25,25 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    private List<FieldErrorResponse> extractFieldErrors(
-            List<FieldError> fieldErrors
-    ) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DomainException.class)
+    public RestApiErrorResponse<?> handleDomainException(DomainException e) {
+        return RestApiErrorResponse.builder()
+                .code("DOMAIN_ERROR")
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public RestApiErrorResponse<?> handleGenericException(Exception e) {
+        return RestApiErrorResponse.builder()
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .message("An unexpected internal error occurred")
+                .build();
+    }
+
+    private List<FieldErrorResponse> extractFieldErrors(List<FieldError> fieldErrors) {
         return fieldErrors.stream()
                 .map(fieldError -> new FieldErrorResponse(
                         fieldError.getField(),
@@ -39,16 +52,4 @@ public class GlobalExceptionHandler {
                 ))
                 .toList();
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(DomainException.class)
-    public RestApiErrorResponse<?> handleDomainException(
-            DomainException e
-    ) {
-        return RestApiErrorResponse.builder()
-                .code("DOMAIN_ERROR")
-                .message(e.getMessage())
-                .build();
-    }
-
 }

@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/customers")
+@RequestMapping("/api/customers")
 @Slf4j
 public class CustomerController {
     private final InitiateCustomerUseCase initiateCustomerUseCase;

@@ -1,0 +1,10 @@
+plugins {
+    id 'spring-common-conventions'
+}
+
+dependencies {
+    api 'kh.edu.istad:business-application-service'
+    api 'kh.edu.istad:business-domain-core'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+}
