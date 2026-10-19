@@ -8,6 +8,7 @@ public record InitiatedCustomerResult(
         String familyName,
         String givenName,
         String email,
-        String phoneNumber
+        String phoneNumber,
+        String customerSegmentType
 ) {
 }

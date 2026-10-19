@@ -14,4 +14,7 @@ public class QueryCustomerUseCase {
     public Flux<Customer> findAll(){
         return customerRepository.findAll();
     }
+    public Flux<Customer> query(){
+        return customerRepository.query();
+    }
 }

@@ -4,6 +4,7 @@ import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Persistable;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -25,6 +26,8 @@ public class CustomerDocument implements Persistable<String> {
     private String email;
     private String phoneNumber;
     private CustomerStatus customerStatus;
+    @DBRef
+    private CustomerSegmentDocument customerSegmentDocument;
 
     @CreatedBy
     private String createdBy;

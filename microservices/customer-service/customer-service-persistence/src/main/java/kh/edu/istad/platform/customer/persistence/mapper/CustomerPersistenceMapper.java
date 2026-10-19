@@ -2,6 +2,7 @@
 package kh.edu.istad.platform.customer.persistence.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
 import kh.edu.istad.platform.customer.domain.valueobject.Email;
 import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
@@ -20,6 +21,8 @@ public interface CustomerPersistenceMapper {
     @Mapping(source = "phoneNumber.value", target = "phoneNumber")
     @Mapping(source = "status", target = "customerStatus")
     CustomerDocument toDocument(Customer customer);
+
+    CustomerDocument fromUpdateCustomerCommandToDocument(UpdateCustomerCommand updateCustomerCommand);
 
     default Customer toDomain(CustomerDocument document) {
         if (document == null) {

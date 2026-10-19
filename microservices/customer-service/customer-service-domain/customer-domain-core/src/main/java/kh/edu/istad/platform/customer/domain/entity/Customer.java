@@ -3,6 +3,7 @@ package kh.edu.istad.platform.customer.domain.entity;
 
 import kh.edu.istad.common.domain.entity.AggregateRoot;
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
 import kh.edu.istad.platform.customer.domain.exception.CustomerDomainException;
 import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
 import kh.edu.istad.platform.customer.domain.valueobject.Email;
@@ -14,6 +15,7 @@ public class Customer extends AggregateRoot<CustomerId> {
     private final String username;
     private String familyName;
     private String givenName;
+    private CustomerSegmentId customerSegmentId;
 
     public String getUsername() {
         return username;
@@ -38,6 +40,11 @@ public class Customer extends AggregateRoot<CustomerId> {
     public CustomerStatus getStatus() {
         return status;
     }
+
+    public CustomerSegmentId getCustomerSegmentId() {
+        return customerSegmentId;
+    }
+
 
     private final Email email;
     private final PhoneNumber phoneNumber;
@@ -68,12 +75,34 @@ public class Customer extends AggregateRoot<CustomerId> {
     }
 
 
-    private void validateCustomer(){
-        if(super.getId() != null){
-            throw new CustomerDomainException("Customer already exist!");
+    private void validateCustomer() {
+        if (customerSegmentId == null) {
+            throw new CustomerDomainException(
+                    "Customer segment must not be null"
+            );
         }
-        if(status!=null){
-            throw new CustomerDomainException("Customer status must be null");
+        if (getId() != null) {
+            throw new CustomerDomainException(
+                    "Customer already exists!"
+            );
+        }
+
+        if (status != null) {
+            throw new CustomerDomainException(
+                    "Customer status must be null before initialization"
+            );
+        }
+
+        if (username == null || username.isBlank()) {
+            throw new CustomerDomainException(
+                    "Username must not be blank"
+            );
+        }
+
+        if (email == null || phoneNumber == null) {
+            throw new CustomerDomainException(
+                    "Email and phone number must not be null"
+            );
         }
     }
 
@@ -81,6 +110,7 @@ public class Customer extends AggregateRoot<CustomerId> {
 
     private Customer(Builder builder) {
         super.setId(builder.id);
+        customerSegmentId = builder.customerSegmentId;
         username = builder.username;
         familyName = builder.familyName;
         givenName = builder.givenName;
@@ -91,6 +121,7 @@ public class Customer extends AggregateRoot<CustomerId> {
 
     public static final class Builder {
         private CustomerId id;
+        private CustomerSegmentId customerSegmentId;
         private String username;
         private String familyName;
         private String givenName;
@@ -132,6 +163,10 @@ public class Customer extends AggregateRoot<CustomerId> {
 
         public Builder phoneNumber(PhoneNumber val) {
             phoneNumber = val;
+            return this;
+        }
+        public Builder customerSegmentId(CustomerSegmentId val) {
+            customerSegmentId = val;
             return this;
         }
 
