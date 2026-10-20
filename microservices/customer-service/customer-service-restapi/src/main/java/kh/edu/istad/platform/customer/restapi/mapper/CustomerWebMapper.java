@@ -37,15 +37,17 @@ public interface CustomerWebMapper {
     }
 
 
+
     @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "username", source = "customer.username")
     @Mapping(target = "familyName", source = "customer.familyName")
     @Mapping(target = "givenName", source = "customer.givenName")
-    @Mapping(target = "email", source = "customer.email")
-    @Mapping(target = "phoneNumber", source = "customer.phoneNumber")
-    @Mapping(target = "customerStatus", source = "customer.status")
+    @Mapping(target = "email", expression = "java(result.customer().getEmail().value())")
+    @Mapping(target = "phoneNumber", expression = "java(result.customer().getPhoneNumber().value())")
+    @Mapping(target = "customerStatus", expression = "java(result.customer().getStatus().name())")
     @Mapping(target = "customerSegmentType", source = "customerSegmentType")
     CustomerResponse toCustomerResponse(CustomerWithSegmentType result);
+
 
     CustomerSegment toCustomerSegment(CustomerSegmentRequest segmentRequest);
 

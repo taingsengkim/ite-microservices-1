@@ -11,6 +11,7 @@ import kh.edu.istad.platform.customer.restapi.mapper.CustomerWebMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -29,6 +30,8 @@ public class CustomerController {
     private final CreateCustomerSegmentUseCase createCustomerSegmentUseCase;
     private final GetCustomerStatisticsUseCase getCustomerStatisticsUseCase;
     private final UpdateCustomerUseCase updateCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
+    private final DeleteCustomerUseCase deleteCustomerUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,6 +70,23 @@ public class CustomerController {
         CustomerId customerId = new CustomerId(id);
         return updateCustomerUseCase.updateCustomer(customerId,customerWebMapper.toUpdateCustomerCommand(customerUpdateRequest)).map(customerWebMapper::toCustomerResponse);
     }
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deleteCustomer(@PathVariable("id") UUID id) {
+        CustomerId customerId = new CustomerId(id);
+
+        return deleteCustomerUseCase.deleteCustomer(customerId)
+                .thenReturn(ResponseEntity.noContent().build());
+    }
+
+
+    @GetMapping("/{id}")
+    public Mono<CustomerResponse> getCustomerById(@PathVariable("id") UUID id) {
+        CustomerId customerId = new CustomerId(id);
+        return getCustomerByIdUseCase.getCustomerById(customerId)
+                .map(customerWebMapper::toCustomerResponse);
+    }
+
 
     @PostMapping("/segment")
     @ResponseStatus(HttpStatus.CREATED)
