@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
 import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
+import kh.edu.istad.platform.customer.domain.dto.CustomerSegmentFilter;
 import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerSegmentCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
@@ -38,7 +39,7 @@ public class CustomerController {
     private final GetCustomerSegmentByIdUseCase getCustomerSegmentByIdUseCase;
     private final UpdateCustomerSegmentUseCase updateCustomerSegmentUseCase;
     private final DeleteCustomerSegmentUseCase deleteCustomerSegmentUseCase;
-
+    private final QueryCustomerSegmentUseCase queryCustomerSegmentUseCase;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<CustomerInitiateResponse> initiateCustomer(@Valid @RequestBody CustomerInitiateRequest customerInitiateRequest) {
@@ -70,6 +71,7 @@ public class CustomerController {
 
         return queryCustomerUseCase.query(filter).map(customerWebMapper::toCustomerResponse);
     }
+
 
     @PatchMapping("/{id}")
     public Mono<CustomerResponse> updateCustomer(@PathVariable("id") UUID id, @Valid @RequestBody CustomerUpdateRequest customerUpdateRequest){
@@ -120,6 +122,15 @@ public class CustomerController {
     @DeleteMapping("/segment/{id}")
     public Mono<Void> hardDeleteCustomerSegment(@PathVariable("id") UUID id){
         return deleteCustomerSegmentUseCase.execute(new CustomerSegmentId(id));
+    }
+    @GetMapping("/segment/search")
+    public Flux<CustomerSegmentResponse> queryCustomerSegments(
+            @RequestParam(name = "type", required = false) String type) {
+
+        CustomerSegmentFilter filter = new CustomerSegmentFilter(type);
+
+        return queryCustomerSegmentUseCase.execute(filter)
+                .map(customerWebMapper::toCustomerSegmentResponse);
     }
 
     @GetMapping("/statistics")

@@ -2,6 +2,9 @@ package kh.edu.istad.platform.customer.persistence.adapter;
 
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.common.persistence.filter.FilterCondition;
+import kh.edu.istad.common.persistence.filter.FilterOperator;
+import kh.edu.istad.common.persistence.filter.GenericMongoQueryBuilder;
 import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
@@ -10,6 +13,7 @@ import kh.edu.istad.platform.customer.domain.port.out.CustomerRepository;
 import kh.edu.istad.platform.customer.persistence.entity.CustomerDocument;
 import kh.edu.istad.platform.customer.persistence.entity.CustomerReadDocument;
 import kh.edu.istad.platform.customer.persistence.mapper.CustomerPersistenceMapper;
+import kh.edu.istad.platform.customer.persistence.query.CustomerQueryBuilder;
 import kh.edu.istad.platform.customer.persistence.repository.CustomerMongoRepository;
 import kh.edu.istad.platform.customer.persistence.repository.CustomerSegmentMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,8 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -123,39 +129,38 @@ public class CustomerReactiveRepositoryAdapter implements CustomerRepository {
         return reactiveMongoTemplate.findOne(query, CustomerReadDocument.class).map(customerPersistenceMapper::toDomain);
     }
 
+
     @Override
     public Flux<Customer> query(CustomerFilter filter) {
-        Query query = new Query();
+        List<FilterCondition> conditions = new ArrayList<>();
 
         if (filter.username() != null && !filter.username().isBlank()) {
-            query.addCriteria(Criteria.where("username").is(filter.username()));
+            conditions.add(new FilterCondition("username", FilterOperator.CONTAINS, filter.username().trim()));
         }
 
         if (filter.familyName() != null && !filter.familyName().isBlank()) {
-            query.addCriteria(Criteria.where("familyName").is(filter.familyName()));
+            conditions.add(new FilterCondition("familyName", FilterOperator.CONTAINS, filter.familyName().trim()));
         }
 
         if (filter.givenName() != null && !filter.givenName().isBlank()) {
-            query.addCriteria(Criteria.where("givenName").is(filter.givenName()));
+            conditions.add(new FilterCondition("givenName", FilterOperator.CONTAINS, filter.givenName().trim()));
         }
 
         if (filter.email() != null && !filter.email().isBlank()) {
-            query.addCriteria(Criteria.where("email").is(filter.email()));
+            conditions.add(new FilterCondition("email", FilterOperator.CONTAINS, filter.email().trim()));
         }
 
         if (filter.phoneNumber() != null && !filter.phoneNumber().isBlank()) {
-            query.addCriteria(Criteria.where("phoneNumber").is(filter.phoneNumber()));
+            conditions.add(new FilterCondition("phoneNumber", FilterOperator.CONTAINS, filter.phoneNumber().trim()));
         }
 
         if (filter.customerStatus() != null && !filter.customerStatus().isBlank()) {
-            query.addCriteria(Criteria.where("customerStatus").is(filter.customerStatus()));
+            conditions.add(new FilterCondition("status", FilterOperator.EQUALS, filter.customerStatus().trim()));
         }
 
-//        return reactiveMongoTemplate
-//                .find(query, CustomerDocument.class)
-//                .map(customerPersistenceMapper::toDomain);
-        return reactiveMongoTemplate
-                .find(query, CustomerReadDocument.class)
+        Query query = GenericMongoQueryBuilder.build(conditions);
+
+        return reactiveMongoTemplate.find(query, CustomerReadDocument.class, "customers")
                 .map(customerPersistenceMapper::toDomain);
     }
 

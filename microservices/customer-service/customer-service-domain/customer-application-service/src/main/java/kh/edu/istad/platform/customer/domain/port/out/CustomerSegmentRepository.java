@@ -1,6 +1,7 @@
 package kh.edu.istad.platform.customer.domain.port.out;
 
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
+import kh.edu.istad.platform.customer.domain.dto.CustomerSegmentFilter;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerSegmentCommand;
 import kh.edu.istad.platform.customer.domain.entity.CustomerSegment;
 import reactor.core.publisher.Flux;
@@ -17,4 +18,6 @@ public interface CustomerSegmentRepository {
     Mono<CustomerSegment> update(CustomerSegmentId customerSegmentId,UpdateCustomerSegmentCommand updateCustomerSegmentCommand);
 
     Mono<Void> delete(CustomerSegmentId customerSegmentId);
+
+    Flux<CustomerSegment> query(CustomerSegmentFilter filter);
 }

@@ -1,0 +1,11 @@
+
+plugins {
+    id 'springboot-common-conventions'
+}
+
+dependencies {
+    implementation project(':istad-common-domain')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+}
