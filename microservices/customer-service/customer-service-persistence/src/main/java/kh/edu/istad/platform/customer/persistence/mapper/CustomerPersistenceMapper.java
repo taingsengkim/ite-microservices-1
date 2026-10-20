@@ -2,11 +2,13 @@
 package kh.edu.istad.platform.customer.persistence.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
 import kh.edu.istad.platform.customer.domain.valueobject.Email;
 import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
 import kh.edu.istad.platform.customer.persistence.entity.CustomerDocument;
+import kh.edu.istad.platform.customer.persistence.entity.CustomerReadDocument;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -24,9 +26,20 @@ public interface CustomerPersistenceMapper {
 
     CustomerDocument fromUpdateCustomerCommandToDocument(UpdateCustomerCommand updateCustomerCommand);
 
-    default Customer toDomain(CustomerDocument document) {
+    default Customer toDomain(CustomerReadDocument document) {
         if (document == null) {
             return null;
+        }
+
+        CustomerSegmentId segmentId = null;
+
+        if (document.getCustomerSegmentDocument() != null
+                && document.getCustomerSegmentDocument().getId() != null) {
+            segmentId = new CustomerSegmentId(
+                    UUID.fromString(
+                            document.getCustomerSegmentDocument().getId().toString()
+                    )
+            );
         }
 
         return Customer.Builder.builder()
@@ -37,9 +50,9 @@ public interface CustomerPersistenceMapper {
                 .email(stringToEmail(document.getEmail()))
                 .phoneNumber(stringToPhoneNumber(document.getPhoneNumber()))
                 .status(document.getCustomerStatus())
+                .customerSegmentId(segmentId)
                 .build();
     }
-
     default CustomerId stringToCustomerId(String id) {
         return id == null ? null : new CustomerId(UUID.fromString(id));
     }

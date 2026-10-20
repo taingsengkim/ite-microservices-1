@@ -2,6 +2,7 @@ package kh.edu.istad.platform.customer.restapi.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
+import kh.edu.istad.platform.customer.domain.dto.CustomerWithSegmentType;
 import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerResult;
@@ -34,6 +35,17 @@ public interface CustomerWebMapper {
                 )
                 .build();
     }
+
+
+    @Mapping(target = "customerId", source = "customer.id")
+    @Mapping(target = "username", source = "customer.username")
+    @Mapping(target = "familyName", source = "customer.familyName")
+    @Mapping(target = "givenName", source = "customer.givenName")
+    @Mapping(target = "email", source = "customer.email")
+    @Mapping(target = "phoneNumber", source = "customer.phoneNumber")
+    @Mapping(target = "customerStatus", source = "customer.status")
+    @Mapping(target = "customerSegmentType", source = "customerSegmentType")
+    CustomerResponse toCustomerResponse(CustomerWithSegmentType result);
 
     CustomerSegment toCustomerSegment(CustomerSegmentRequest segmentRequest);
 

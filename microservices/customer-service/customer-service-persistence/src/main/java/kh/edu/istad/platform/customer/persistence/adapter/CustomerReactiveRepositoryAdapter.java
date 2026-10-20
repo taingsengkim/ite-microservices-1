@@ -2,11 +2,13 @@ package kh.edu.istad.platform.customer.persistence.adapter;
 
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
 import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
 import kh.edu.istad.platform.customer.domain.exception.CustomerDomainException;
 import kh.edu.istad.platform.customer.domain.port.out.CustomerRepository;
 import kh.edu.istad.platform.customer.persistence.entity.CustomerDocument;
+import kh.edu.istad.platform.customer.persistence.entity.CustomerReadDocument;
 import kh.edu.istad.platform.customer.persistence.mapper.CustomerPersistenceMapper;
 import kh.edu.istad.platform.customer.persistence.repository.CustomerMongoRepository;
 import kh.edu.istad.platform.customer.persistence.repository.CustomerSegmentMongoRepository;
@@ -32,31 +34,42 @@ public class CustomerReactiveRepositoryAdapter implements CustomerRepository {
 
     @Override
     public Mono<Customer> save(Customer customer) {
+        if (customer.getCustomerSegmentId() == null) {
+            return Mono.error(new CustomerDomainException("Customer segment ID is required"));
+        }
+
         return customerSegmentMongoRepository
                 .findById(customer.getCustomerSegmentId().value().toString())
-                .switchIfEmpty(Mono.error(
-                        new CustomerDomainException("Customer segment not found")
-                ))
+                .switchIfEmpty(Mono.error(new CustomerDomainException("Customer segment not found")))
                 .flatMap(segmentDocument -> {
-                    CustomerDocument document =
-                            customerPersistenceMapper.toDocument(customer);
-
-                    // Set the existing segment document as the DBRef.
+                    CustomerDocument document = customerPersistenceMapper.toDocument(customer);
                     document.setCustomerSegmentDocument(segmentDocument);
+                    return customerMongoRepository.save(document).thenReturn(customer);
+                });
+    }
 
-                    return customerMongoRepository.save(document);
-                })
+//    @Override
+//    public Mono<Customer> findById(CustomerId customerId) {
+//        return customerMongoRepository.findById(customerId.value().toString()).map(customerPersistenceMapper::toDomain);
+//    }
+    @Override
+    public Mono<Customer> findById(CustomerId customerId) {
+        Query query = Query.query(
+                Criteria.where("_id").is(customerId.value().toString())
+        );
+
+        return reactiveMongoTemplate
+                .findOne(query, CustomerReadDocument.class)
                 .map(customerPersistenceMapper::toDomain);
     }
 
-    @Override
-    public Mono<Customer> findById(CustomerId customerId) {
-        return customerMongoRepository.findById(customerId.value().toString()).map(customerPersistenceMapper::toDomain);
-    }
-
+//    @Override
+//    public Flux<Customer> findAll() {
+//        return customerMongoRepository.findAll().map(d->customerPersistenceMapper.toDomain(d));
+//    }
     @Override
     public Flux<Customer> findAll() {
-        return customerMongoRepository.findAll().map(d->customerPersistenceMapper.toDomain(d));
+        return reactiveMongoTemplate.findAll(CustomerReadDocument.class).map(customerPersistenceMapper::toDomain);
     }
 
     @Override
@@ -71,16 +84,46 @@ public class CustomerReactiveRepositoryAdapter implements CustomerRepository {
 
     @Override
     public Mono<Customer> findByUsername(String username) {
-
-        return customerMongoRepository.findByUsername(username).map(customerPersistenceMapper::toDomain);
+        Query query = Query.query(
+                Criteria.where("username").is(username)
+        );
+        return reactiveMongoTemplate.findOne(query, CustomerReadDocument.class).map(customerPersistenceMapper::toDomain);
     }
 
     @Override
-    public Flux<Customer> query() {
-        Query query = Query.query(
-                Criteria.where("username").eq("dw")
-        );
-        return  reactiveMongoTemplate.find(query, CustomerDocument.class).map(customerPersistenceMapper::toDomain);
+    public Flux<Customer> query(CustomerFilter filter) {
+        Query query = new Query();
+
+        if (filter.username() != null && !filter.username().isBlank()) {
+            query.addCriteria(Criteria.where("username").is(filter.username()));
+        }
+
+        if (filter.familyName() != null && !filter.familyName().isBlank()) {
+            query.addCriteria(Criteria.where("familyName").is(filter.familyName()));
+        }
+
+        if (filter.givenName() != null && !filter.givenName().isBlank()) {
+            query.addCriteria(Criteria.where("givenName").is(filter.givenName()));
+        }
+
+        if (filter.email() != null && !filter.email().isBlank()) {
+            query.addCriteria(Criteria.where("email").is(filter.email()));
+        }
+
+        if (filter.phoneNumber() != null && !filter.phoneNumber().isBlank()) {
+            query.addCriteria(Criteria.where("phoneNumber").is(filter.phoneNumber()));
+        }
+
+        if (filter.customerStatus() != null && !filter.customerStatus().isBlank()) {
+            query.addCriteria(Criteria.where("customerStatus").is(filter.customerStatus()));
+        }
+
+//        return reactiveMongoTemplate
+//                .find(query, CustomerDocument.class)
+//                .map(customerPersistenceMapper::toDomain);
+        return reactiveMongoTemplate
+                .find(query, CustomerReadDocument.class)
+                .map(customerPersistenceMapper::toDomain);
     }
 
 
