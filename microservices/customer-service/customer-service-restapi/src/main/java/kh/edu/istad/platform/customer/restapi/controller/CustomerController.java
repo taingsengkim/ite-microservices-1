@@ -1,8 +1,10 @@
 package kh.edu.istad.platform.customer.restapi.controller;
 
 import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
+import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
 import kh.edu.istad.platform.customer.domain.usecase.CreateCustomerSegmentUseCase;
 import kh.edu.istad.platform.customer.domain.usecase.CreateCustomerUseCase;
+import kh.edu.istad.platform.customer.domain.usecase.GetCustomerStatisticsUseCase;
 import kh.edu.istad.platform.customer.domain.usecase.QueryCustomerUseCase;
 import kh.edu.istad.platform.customer.restapi.dto.*;
 import kh.edu.istad.platform.customer.restapi.mapper.CustomerWebMapper;
@@ -23,7 +25,7 @@ public class CustomerController {
     private final CreateCustomerUseCase createCustomerUseCase;
     private final QueryCustomerUseCase queryCustomerUseCase;
     private final CreateCustomerSegmentUseCase createCustomerSegmentUseCase;
-
+    private final GetCustomerStatisticsUseCase getCustomerStatisticsUseCase;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<CustomerInitiateResponse> initiateCustomer(@RequestBody CustomerInitiateRequest customerInitiateRequest) {
@@ -61,4 +63,10 @@ public class CustomerController {
     public Mono<CustomerSegmentResponse> initiateCustomerSegment(@RequestBody CustomerSegmentRequest customerSegmentRequest) {
         return createCustomerSegmentUseCase.execute(customerWebMapper.toCustomerSegment(customerSegmentRequest)).map(customerWebMapper::toCustomerSegmentResponse);
     }
+
+    @GetMapping("/statistics")
+    public Mono<CustomerStatistics> getStatistics() {
+        return getCustomerStatisticsUseCase.execute();
+    }
+
 }
