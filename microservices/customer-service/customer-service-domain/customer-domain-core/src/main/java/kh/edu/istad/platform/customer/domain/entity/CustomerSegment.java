@@ -15,6 +15,13 @@ public class CustomerSegment extends AuditableEntity<CustomerSegmentId> {
         return type;
     }
 
+    public void updateType(String type) {
+        if (type == null || type.isBlank()) {
+            throw new CustomerDomainException("Customer segment type must not be blank");
+        }
+        this.type = type;
+    }
+
     public void initiateCustomerSegment() {
         validateInitiate();
         super.setId(new CustomerSegmentId(UUID.randomUUID()));

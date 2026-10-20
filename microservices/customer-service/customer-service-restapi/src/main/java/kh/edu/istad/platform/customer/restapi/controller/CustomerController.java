@@ -2,8 +2,10 @@ package kh.edu.istad.platform.customer.restapi.controller;
 
 import jakarta.validation.Valid;
 import kh.edu.istad.common.domain.valueobject.CustomerId;
+import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
 import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
 import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
+import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerSegmentCommand;
 import kh.edu.istad.platform.customer.domain.entity.Customer;
 import kh.edu.istad.platform.customer.domain.usecase.*;
 import kh.edu.istad.platform.customer.restapi.dto.*;
@@ -32,6 +34,10 @@ public class CustomerController {
     private final UpdateCustomerUseCase updateCustomerUseCase;
     private final GetCustomerByIdUseCase getCustomerByIdUseCase;
     private final DeleteCustomerUseCase deleteCustomerUseCase;
+    private final GetAllCustomerSegmentsUseCase getAllCustomerSegmentsUseCase;
+    private final GetCustomerSegmentByIdUseCase getCustomerSegmentByIdUseCase;
+    private final UpdateCustomerSegmentUseCase updateCustomerSegmentUseCase;
+    private final DeleteCustomerSegmentUseCase deleteCustomerSegmentUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -92,6 +98,28 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<CustomerSegmentResponse> initiateCustomerSegment(@RequestBody CustomerSegmentRequest customerSegmentRequest) {
         return createCustomerSegmentUseCase.execute(customerWebMapper.toCustomerSegment(customerSegmentRequest)).map(customerWebMapper::toCustomerSegmentResponse);
+    }
+
+    @GetMapping("/segment")
+    public Flux<CustomerSegmentResponse> getAllCustomerSegment(){
+        return getAllCustomerSegmentsUseCase.execute().map(customerWebMapper::toCustomerSegmentResponse);
+    }
+
+    @GetMapping("/segment/{id}")
+    public Mono<CustomerSegmentResponse> getCustomerSegmentById(@PathVariable("id") UUID id) {
+        return getCustomerSegmentByIdUseCase.execute(new CustomerSegmentId(id))
+                .map(customerWebMapper::toCustomerSegmentResponse);
+    }
+
+    @PatchMapping("/segment/{id}")
+    public Mono<CustomerSegmentResponse> updateCustomerSegment(@PathVariable("id") UUID id, @RequestBody CustomerSegmentUpdateRequest customerSegmentUpdateRequest) {
+        return updateCustomerSegmentUseCase.execute(new CustomerSegmentId(id),customerWebMapper.toUpdateCustomerSegmentCommand(customerSegmentUpdateRequest))
+                .map(customerWebMapper::toCustomerSegmentResponse);
+    }
+
+    @DeleteMapping("/segment/{id}")
+    public Mono<Void> hardDeleteCustomerSegment(@PathVariable("id") UUID id){
+        return deleteCustomerSegmentUseCase.execute(new CustomerSegmentId(id));
     }
 
     @GetMapping("/statistics")
