@@ -12,4 +12,5 @@ public interface CustomerDomainService {
 
     CustomerDeactivatedEvent deactivateCustomer(Customer customer);
 
+
 }
