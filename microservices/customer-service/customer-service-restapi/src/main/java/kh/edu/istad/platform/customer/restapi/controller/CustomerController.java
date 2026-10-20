@@ -41,7 +41,7 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<CustomerInitiateResponse> initiateCustomer(@RequestBody CustomerInitiateRequest customerInitiateRequest) {
+    public Mono<CustomerInitiateResponse> initiateCustomer(@Valid @RequestBody CustomerInitiateRequest customerInitiateRequest) {
         return createCustomerUseCase
                 .create(customerWebMapper.toCustomer(customerInitiateRequest))
                 .map(customerWebMapper::toInitiatedResponse);
@@ -96,7 +96,7 @@ public class CustomerController {
 
     @PostMapping("/segment")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<CustomerSegmentResponse> initiateCustomerSegment(@RequestBody CustomerSegmentRequest customerSegmentRequest) {
+    public Mono<CustomerSegmentResponse> initiateCustomerSegment(@Valid @RequestBody  CustomerSegmentRequest customerSegmentRequest) {
         return createCustomerSegmentUseCase.execute(customerWebMapper.toCustomerSegment(customerSegmentRequest)).map(customerWebMapper::toCustomerSegmentResponse);
     }
 
@@ -112,7 +112,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/segment/{id}")
-    public Mono<CustomerSegmentResponse> updateCustomerSegment(@PathVariable("id") UUID id, @RequestBody CustomerSegmentUpdateRequest customerSegmentUpdateRequest) {
+    public Mono<CustomerSegmentResponse> updateCustomerSegment(@PathVariable("id") UUID id, @Valid @RequestBody CustomerSegmentUpdateRequest customerSegmentUpdateRequest) {
         return updateCustomerSegmentUseCase.execute(new CustomerSegmentId(id),customerWebMapper.toUpdateCustomerSegmentCommand(customerSegmentUpdateRequest))
                 .map(customerWebMapper::toCustomerSegmentResponse);
     }
