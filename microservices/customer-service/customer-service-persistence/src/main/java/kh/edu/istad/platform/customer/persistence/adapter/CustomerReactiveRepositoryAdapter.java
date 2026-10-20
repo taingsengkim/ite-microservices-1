@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -77,10 +78,42 @@ public class CustomerReactiveRepositoryAdapter implements CustomerRepository {
         return customerMongoRepository.deleteById(customerId.value().toString());
     }
 
+
     @Override
-    public Mono<Customer> updateCustomer(CustomerId customerId,UpdateCustomerCommand updateCustomerCommand) {
-        return null;
+    public Mono<Customer> updateCustomer(CustomerId customerId, UpdateCustomerCommand command) {
+        Query query = Query.query(Criteria.where("_id").is(customerId.value().toString()));
+        Update update = new Update();
+
+        if (command.familyName() != null) update.set("familyName", command.familyName());
+        if (command.givenName() != null) update.set("givenName", command.givenName());
+        if (command.email() != null) update.set("email", command.email());
+        if (command.phoneNumber() != null) update.set("phoneNumber", command.phoneNumber());
+
+        Mono<Void> updateSegment = Mono.empty();
+
+        if (command.customerSegmentId() != null) {
+            updateSegment = customerSegmentMongoRepository.findById(command.customerSegmentId().toString())
+                    .switchIfEmpty(Mono.error(new CustomerDomainException("Customer segment not found")))
+                    .flatMap(segment -> {
+                        update.set("customerSegmentDocument", segment);
+                        return Mono.empty();
+                    });
+        }
+
+        if (update.getUpdateObject().isEmpty() && command.customerSegmentId() == null) {
+            return findById(customerId)
+                    .switchIfEmpty(Mono.error(new CustomerDomainException("Customer not found")));
+        }
+
+        return updateSegment.then(reactiveMongoTemplate.updateFirst(query, update, CustomerDocument.class))
+                .flatMap(result -> {
+                    if (result.getMatchedCount() == 0) {
+                        return Mono.error(new CustomerDomainException("Customer not found"));
+                    }
+                    return findById(customerId);
+                });
     }
+
 
     @Override
     public Mono<Customer> findByUsername(String username) {

@@ -21,6 +21,30 @@ public class Customer extends AggregateRoot<CustomerId> {
         return username;
     }
 
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    public void setCustomerSegmentId(CustomerSegmentId customerSegmentId) {
+        this.customerSegmentId = customerSegmentId;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
+    }
+
     public String getFamilyName() {
         return familyName;
     }
@@ -46,8 +70,8 @@ public class Customer extends AggregateRoot<CustomerId> {
     }
 
 
-    private final Email email;
-    private final PhoneNumber phoneNumber;
+    private Email email;
+    private  PhoneNumber phoneNumber;
     private CustomerStatus status;
 
     // Domain Critical Logic

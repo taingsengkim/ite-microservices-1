@@ -1,8 +1,13 @@
+
 package kh.edu.istad.platform.customer.domain.dto;
 
-public record UpdateCustomerCommand (
-        String familyName,
-        String givenName
-){
+import java.util.UUID;
 
+public record UpdateCustomerCommand(
+        String familyName,
+        String givenName,
+        String email,
+        String phoneNumber,
+        UUID customerSegmentId
+) {
 }

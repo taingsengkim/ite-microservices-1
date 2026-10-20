@@ -58,7 +58,25 @@ public interface CustomerWebMapper {
 
     CustomerInitiateResponse toInitiatedResponse(InitiatedCustomerResult result);
 
+
+    @Mapping(target = "familyName", source = "familyName")
+    @Mapping(target = "givenName", source = "givenName")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
+    @Mapping(target = "customerSegmentId", source = "customerSegmentId")
     UpdateCustomerCommand toUpdateCustomerCommand(CustomerUpdateRequest request);
+
+
+    @Mapping(target = "customerId", source = "id")
+    @Mapping(target = "username", source = "username")
+    @Mapping(target = "familyName", source = "familyName")
+    @Mapping(target = "givenName", source = "givenName")
+    @Mapping(target = "email", expression = "java(customer.getEmail().value())")
+    @Mapping(target = "phoneNumber", expression = "java(customer.getPhoneNumber().value())")
+    @Mapping(target = "customerStatus", expression = "java(customer.getStatus().name())")
+    @Mapping(target = "customerSegmentType", ignore = true)
+    CustomerResponse toCustomerResponse(Customer customer);
+
 
     CustomerUpdateResponse toCustomerUpdateResponse(UpdateCustomerResult result);
     default CustomerSegmentId toCustomerSegmentId(UUID id) {
