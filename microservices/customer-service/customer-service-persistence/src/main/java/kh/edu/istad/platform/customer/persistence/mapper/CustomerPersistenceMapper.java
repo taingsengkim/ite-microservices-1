@@ -1,14 +1,14 @@
 
-package kh.edu.istad.platform.customer.persistence.mapper;
+package kh.edu.istad.platform.customer.client.persistence.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
-import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.valueobject.Email;
-import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
-import kh.edu.istad.platform.customer.persistence.entity.CustomerDocument;
-import kh.edu.istad.platform.customer.persistence.entity.CustomerReadDocument;
+import kh.edu.istad.platform.customer.client.domain.dto.UpdateCustomerCommand;
+import kh.edu.istad.platform.customer.client.domain.entity.Customer;
+import kh.edu.istad.platform.customer.client.domain.valueobject.Email;
+import kh.edu.istad.platform.customer.client.domain.valueobject.PhoneNumber;
+import kh.edu.istad.platform.customer.client.persistence.entity.CustomerDocument;
+import kh.edu.istad.platform.customer.client.persistence.entity.CustomerReadDocument;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

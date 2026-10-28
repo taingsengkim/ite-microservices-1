@@ -1,7 +1,7 @@
-package kh.edu.istad.platform.customer.domain.usecase;
+package kh.edu.istad.platform.customer.client.domain.usecase;
 
-import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
-import kh.edu.istad.platform.customer.domain.port.out.CustomerStatisticsRepository;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerStatistics;
+import kh.edu.istad.platform.customer.client.domain.port.out.CustomerStatisticsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

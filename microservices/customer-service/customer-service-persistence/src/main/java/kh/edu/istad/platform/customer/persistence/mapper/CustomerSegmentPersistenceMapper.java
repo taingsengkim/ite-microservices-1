@@ -1,9 +1,9 @@
 
-package kh.edu.istad.platform.customer.persistence.mapper;
+package kh.edu.istad.platform.customer.client.persistence.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.entity.CustomerSegment;
-import kh.edu.istad.platform.customer.persistence.entity.CustomerSegmentDocument;
+import kh.edu.istad.platform.customer.client.domain.entity.CustomerSegment;
+import kh.edu.istad.platform.customer.client.persistence.entity.CustomerSegmentDocument;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

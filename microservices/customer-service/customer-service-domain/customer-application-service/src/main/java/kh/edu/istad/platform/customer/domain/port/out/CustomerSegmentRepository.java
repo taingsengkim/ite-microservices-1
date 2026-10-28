@@ -1,7 +1,7 @@
-package kh.edu.istad.platform.customer.domain.port.out;
+package kh.edu.istad.platform.customer.client.domain.port.out;
 
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.entity.CustomerSegment;
+import kh.edu.istad.platform.customer.client.domain.entity.CustomerSegment;
 import reactor.core.publisher.Mono;
 
 public interface CustomerSegmentRepository {

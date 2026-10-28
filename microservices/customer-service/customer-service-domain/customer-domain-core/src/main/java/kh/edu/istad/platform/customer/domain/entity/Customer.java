@@ -1,13 +1,13 @@
-package kh.edu.istad.platform.customer.domain.entity;
+package kh.edu.istad.platform.customer.client.domain.entity;
 
 
 import kh.edu.istad.common.domain.entity.AggregateRoot;
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.exception.CustomerDomainException;
-import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
-import kh.edu.istad.platform.customer.domain.valueobject.Email;
-import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
+import kh.edu.istad.platform.customer.client.domain.exception.CustomerDomainException;
+import kh.edu.istad.platform.customer.client.domain.valueobject.CustomerStatus;
+import kh.edu.istad.platform.customer.client.domain.valueobject.Email;
+import kh.edu.istad.platform.customer.client.domain.valueobject.PhoneNumber;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.persistence.entity;
+package kh.edu.istad.platform.customer.client.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

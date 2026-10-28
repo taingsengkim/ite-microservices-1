@@ -1,16 +1,14 @@
-package kh.edu.istad.platform.customer.domain.mapper;
+package kh.edu.istad.platform.customer.client.domain.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.dto.InitiateCustomerCommand;
-import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
-import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
-import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerResult;
-import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.valueobject.Email;
-import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
+import kh.edu.istad.platform.customer.client.domain.dto.InitiateCustomerCommand;
+import kh.edu.istad.platform.customer.client.domain.dto.InitiatedCustomerResult;
+import kh.edu.istad.platform.customer.client.domain.dto.UpdateCustomerCommand;
+import kh.edu.istad.platform.customer.client.domain.dto.UpdateCustomerResult;
+import kh.edu.istad.platform.customer.client.domain.entity.Customer;
+import kh.edu.istad.platform.customer.client.domain.valueobject.Email;
+import kh.edu.istad.platform.customer.client.domain.valueobject.PhoneNumber;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class CustomerDomainMapper {

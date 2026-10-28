@@ -1,14 +1,13 @@
-package kh.edu.istad.platform.customer.persistence.adapter;
+package kh.edu.istad.platform.customer.client.persistence.adapter;
 
-import kh.edu.istad.platform.customer.domain.dto.CustomerCountBySegment;
-import kh.edu.istad.platform.customer.domain.dto.CustomerCountByStatus;
-import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
-import kh.edu.istad.platform.customer.domain.port.out.CustomerStatisticsRepository;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerCountBySegment;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerCountByStatus;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerStatistics;
+import kh.edu.istad.platform.customer.client.domain.port.out.CustomerStatisticsRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

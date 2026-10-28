@@ -1,8 +1,6 @@
-package kh.edu.istad.platform.customer.persistence.repository;
+package kh.edu.istad.platform.customer.client.persistence.repository;
 
-import kh.edu.istad.common.domain.valueobject.CustomerId;
-import kh.edu.istad.platform.customer.persistence.adapter.CustomerReactiveRepositoryAdapter;
-import kh.edu.istad.platform.customer.persistence.entity.CustomerDocument;
+import kh.edu.istad.platform.customer.client.persistence.entity.CustomerDocument;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

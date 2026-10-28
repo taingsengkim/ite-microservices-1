@@ -1,9 +1,9 @@
 
-package kh.edu.istad.platform.customer.domain.entity;
+package kh.edu.istad.platform.customer.client.domain.entity;
 
 import kh.edu.istad.common.domain.entity.AuditableEntity;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.exception.CustomerDomainException;
+import kh.edu.istad.platform.customer.client.domain.exception.CustomerDomainException;
 
 import java.util.UUID;
 

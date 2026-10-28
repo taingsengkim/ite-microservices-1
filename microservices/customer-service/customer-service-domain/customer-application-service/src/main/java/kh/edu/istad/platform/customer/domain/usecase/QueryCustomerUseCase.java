@@ -1,10 +1,10 @@
-package kh.edu.istad.platform.customer.domain.usecase;
+package kh.edu.istad.platform.customer.client.domain.usecase;
 
-import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
-import kh.edu.istad.platform.customer.domain.dto.CustomerWithSegmentType;
-import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.port.out.CustomerRepository;
-import kh.edu.istad.platform.customer.domain.port.out.CustomerSegmentRepository;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerFilter;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerWithSegmentType;
+import kh.edu.istad.platform.customer.client.domain.entity.Customer;
+import kh.edu.istad.platform.customer.client.domain.port.out.CustomerRepository;
+import kh.edu.istad.platform.customer.client.domain.port.out.CustomerSegmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

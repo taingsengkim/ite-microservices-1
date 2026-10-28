@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.domain.dto;
+package kh.edu.istad.platform.customer.client.domain.dto;
 
 import java.util.UUID;
 

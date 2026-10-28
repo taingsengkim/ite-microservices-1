@@ -1,6 +1,6 @@
-package kh.edu.istad.platform.customer.persistence.converter;
+package kh.edu.istad.platform.customer.client.persistence.converter;
 
-import kh.edu.istad.platform.customer.domain.valueobject.Email;
+import kh.edu.istad.platform.customer.client.domain.valueobject.Email;
 import org.bson.Document;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;

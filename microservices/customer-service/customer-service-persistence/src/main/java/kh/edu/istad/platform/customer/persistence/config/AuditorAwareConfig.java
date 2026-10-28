@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.persistence.config;
+package kh.edu.istad.platform.customer.client.persistence.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

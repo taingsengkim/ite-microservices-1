@@ -1,10 +1,10 @@
-package kh.edu.istad.platform.customer.persistence.adapter;
+package kh.edu.istad.platform.customer.client.persistence.adapter;
 
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.entity.CustomerSegment;
-import kh.edu.istad.platform.customer.domain.port.out.CustomerSegmentRepository;
-import kh.edu.istad.platform.customer.persistence.mapper.CustomerSegmentPersistenceMapper;
-import kh.edu.istad.platform.customer.persistence.repository.CustomerSegmentMongoRepository;
+import kh.edu.istad.platform.customer.client.domain.entity.CustomerSegment;
+import kh.edu.istad.platform.customer.client.domain.port.out.CustomerSegmentRepository;
+import kh.edu.istad.platform.customer.client.persistence.mapper.CustomerSegmentPersistenceMapper;
+import kh.edu.istad.platform.customer.client.persistence.repository.CustomerSegmentMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

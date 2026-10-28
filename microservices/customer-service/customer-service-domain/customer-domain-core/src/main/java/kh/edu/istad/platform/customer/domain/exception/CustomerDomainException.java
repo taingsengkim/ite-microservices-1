@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.domain.exception;
+package kh.edu.istad.platform.customer.client.domain.exception;
 
 import kh.edu.istad.common.domain.exception.DomainException;
 

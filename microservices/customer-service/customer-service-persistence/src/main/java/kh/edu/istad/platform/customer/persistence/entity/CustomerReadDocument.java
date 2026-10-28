@@ -1,7 +1,7 @@
-package kh.edu.istad.platform.customer.persistence.entity;
+package kh.edu.istad.platform.customer.client.persistence.entity;
 
 import com.mongodb.DBRef;
-import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
+import kh.edu.istad.platform.customer.client.domain.valueobject.CustomerStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

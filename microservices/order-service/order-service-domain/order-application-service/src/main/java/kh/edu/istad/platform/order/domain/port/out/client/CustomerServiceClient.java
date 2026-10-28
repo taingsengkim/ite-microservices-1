@@ -1,0 +1,12 @@
+package kh.edu.istad.platform.order.domain.port.out.client;
+
+import kh.edu.istad.platform.order.domain.dto.CustomerResponse;
+import reactor.core.publisher.Flux;
+
+
+public interface CustomerServiceClient {
+
+    Flux<String> getCustomerNames();
+    Flux<CustomerResponse> getCustomers();
+
+}

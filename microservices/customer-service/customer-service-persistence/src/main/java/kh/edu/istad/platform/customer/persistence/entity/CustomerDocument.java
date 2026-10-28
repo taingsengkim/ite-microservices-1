@@ -1,6 +1,6 @@
-package kh.edu.istad.platform.customer.persistence.entity;
+package kh.edu.istad.platform.customer.client.persistence.entity;
 
-import kh.edu.istad.platform.customer.domain.valueobject.CustomerStatus;
+import kh.edu.istad.platform.customer.client.domain.valueobject.CustomerStatus;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Persistable;

@@ -1,16 +1,16 @@
-package kh.edu.istad.platform.customer.restapi.mapper;
+package kh.edu.istad.platform.customer.client.restapi.mapper;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import kh.edu.istad.common.domain.valueobject.CustomerSegmentId;
-import kh.edu.istad.platform.customer.domain.dto.CustomerWithSegmentType;
-import kh.edu.istad.platform.customer.domain.dto.InitiatedCustomerResult;
-import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerCommand;
-import kh.edu.istad.platform.customer.domain.dto.UpdateCustomerResult;
-import kh.edu.istad.platform.customer.domain.entity.Customer;
-import kh.edu.istad.platform.customer.domain.entity.CustomerSegment;
-import kh.edu.istad.platform.customer.domain.valueobject.Email;
-import kh.edu.istad.platform.customer.domain.valueobject.PhoneNumber;
-import kh.edu.istad.platform.customer.restapi.dto.*;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerWithSegmentType;
+import kh.edu.istad.platform.customer.client.domain.dto.InitiatedCustomerResult;
+import kh.edu.istad.platform.customer.client.domain.dto.UpdateCustomerCommand;
+import kh.edu.istad.platform.customer.client.domain.dto.UpdateCustomerResult;
+import kh.edu.istad.platform.customer.client.domain.entity.Customer;
+import kh.edu.istad.platform.customer.client.domain.entity.CustomerSegment;
+import kh.edu.istad.platform.customer.client.domain.valueobject.Email;
+import kh.edu.istad.platform.customer.client.domain.valueobject.PhoneNumber;
+import kh.edu.istad.platform.customer.client.restapi.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

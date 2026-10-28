@@ -1,17 +1,18 @@
-package kh.edu.istad.platform.customer.restapi.controller;
+package kh.edu.istad.platform.customer.client.restapi.controller;
 
-import kh.edu.istad.platform.customer.domain.dto.CustomerFilter;
-import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
-import kh.edu.istad.platform.customer.domain.usecase.CreateCustomerSegmentUseCase;
-import kh.edu.istad.platform.customer.domain.usecase.CreateCustomerUseCase;
-import kh.edu.istad.platform.customer.domain.usecase.GetCustomerStatisticsUseCase;
-import kh.edu.istad.platform.customer.domain.usecase.QueryCustomerUseCase;
-import kh.edu.istad.platform.customer.restapi.dto.*;
-import kh.edu.istad.platform.customer.restapi.mapper.CustomerWebMapper;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerFilter;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerStatistics;
+import kh.edu.istad.platform.customer.client.domain.usecase.CreateCustomerSegmentUseCase;
+import kh.edu.istad.platform.customer.client.domain.usecase.CreateCustomerUseCase;
+import kh.edu.istad.platform.customer.client.domain.usecase.GetCustomerStatisticsUseCase;
+import kh.edu.istad.platform.customer.client.domain.usecase.QueryCustomerUseCase;
+import kh.edu.istad.platform.customer.client.restapi.dto.*;
+import kh.edu.istad.platform.customer.client.restapi.mapper.CustomerWebMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +21,17 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/v1/customers")
 @Slf4j
 public class CustomerController {
+    private final WebClient hardCodedWebClient = WebClient.builder()
+            .baseUrl("http://localhost:9092")
+            .build();
+
+    @GetMapping("/test-hardcoded-call")
+    public Mono<String> testHardCodedCommunication() {
+        return hardCodedWebClient.get()
+                .uri("/api/v1/business-data")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 
     private final CustomerWebMapper customerWebMapper;
     private final CreateCustomerUseCase createCustomerUseCase;

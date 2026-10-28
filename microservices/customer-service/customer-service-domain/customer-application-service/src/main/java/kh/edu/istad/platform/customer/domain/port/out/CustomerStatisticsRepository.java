@@ -1,6 +1,6 @@
-package kh.edu.istad.platform.customer.domain.port.out;
+package kh.edu.istad.platform.customer.client.domain.port.out;
 
-import kh.edu.istad.platform.customer.domain.dto.CustomerStatistics;
+import kh.edu.istad.platform.customer.client.domain.dto.CustomerStatistics;
 import reactor.core.publisher.Mono;
 
 public interface CustomerStatisticsRepository {

@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.restapi.dto;
+package kh.edu.istad.platform.customer.client.restapi.dto;
 
 import java.util.UUID;
 

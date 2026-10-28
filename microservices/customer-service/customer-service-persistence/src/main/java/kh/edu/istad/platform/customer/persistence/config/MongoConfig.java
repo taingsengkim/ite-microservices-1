@@ -1,11 +1,10 @@
-package kh.edu.istad.platform.customer.persistence.config;
+package kh.edu.istad.platform.customer.client.persistence.config;
 
 
-import kh.edu.istad.platform.customer.persistence.converter.CustomerIdReadConverter;
-import kh.edu.istad.platform.customer.persistence.converter.CustomerIdWriteConverter;
+import kh.edu.istad.platform.customer.client.persistence.converter.CustomerIdReadConverter;
+import kh.edu.istad.platform.customer.client.persistence.converter.CustomerIdWriteConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 

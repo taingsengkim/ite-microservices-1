@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.restapi.dto;
+package kh.edu.istad.platform.customer.client.restapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package kh.edu.istad.platform.customer.persistence.converter;
+package kh.edu.istad.platform.customer.client.persistence.converter;
 
 import kh.edu.istad.common.domain.valueobject.CustomerId;
 import org.bson.Document;
